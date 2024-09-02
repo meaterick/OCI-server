@@ -26,3 +26,5 @@ app.post('/submit', (req, res) => {
 app.listen(port, () =>{
     console.log(`TEST ${port}`)
 })
+
+const test = 10;

@@ -3,13 +3,13 @@ const express = require('express')
 , path = require('path')
 , static = require('serve-static');
 
-//const { MongoClient } = require("mongodb");
+const { MongoClient } = require("mongodb");
 const app = express()
 const port = 80
 
-//const url = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
-//const client = new MongoClient(url);
-/*
+const url = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
+const client = new MongoClient(url);
+
 async function run() {
   try {
     const database = client.db('sample_mflix');
@@ -26,7 +26,7 @@ async function run() {
   }
 }
 run().catch(console.dir);
-*/
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));
 
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 app.post('/submit', (req, res) => {
     const password = req.body.pwd;
     
-    if (password.toString() == "chichi1..") {
+    if (password.toString() == "chichiiscute") {
         res.sendFile(path.join(__dirname, 'src', 'first.html')); 
     } else {
         res.send('wrong');

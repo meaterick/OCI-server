@@ -3,7 +3,7 @@ const express = require('express')
 , path = require('path')
 , static = require('serve-static');
 
-const app = express();
+const app = express()
 const port = 80
 
 app.use(express.urlencoded({ extended: true }));
@@ -26,5 +26,3 @@ app.post('/submit', (req, res) => {
 app.listen(port, () =>{
     console.log(`TEST ${port}`)
 })
-
-const test = 10;

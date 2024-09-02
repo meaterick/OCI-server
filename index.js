@@ -9,7 +9,7 @@ const port = 80
 
 const url = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 const client = new MongoClient(url);
-
+/*
 async function run() {
   try {
     const database = client.db('sample_mflix');
@@ -26,7 +26,7 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
+*/
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));
 

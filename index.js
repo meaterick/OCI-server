@@ -49,7 +49,6 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
 });
 
-/*
 app.post('/signup', (req, res) => {
   const password = req.body.pwd;
   const id = req.body.id;
@@ -97,9 +96,9 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
-  res.sendFile(path.join(__dirname, 'src', 'index.html'));
+  res.sendFile(path.join(__dirname, 'src', 'indexpage.html'));
 })
-*/
+
 app.listen(port, () =>{
     console.log(`TEST ${port}`)
 })

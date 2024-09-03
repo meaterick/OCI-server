@@ -19,8 +19,8 @@ db.once('open', async function() {
   const usersCollection = db.collection('users');
 
   // 데이터 조회
-  const users = await usersCollection.find({ID:'meaterick'})
-  console.log('모든 사용자:', users);
+  const user = await usersCollection.findOne({ ID: 'meaterick' }).exec();
+  console.log('모든 사용자:', user);
 
   // 연결 종료
   mongoose.connection.close();

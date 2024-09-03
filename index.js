@@ -46,9 +46,31 @@ app.use(express.static('src'));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
-})
+});
 
-app.post('/submit', (req, res) => {
+
+app.post('/signup', (req, res) => {
+  const password = req.body.pwd;
+  const id = req.body.id;
+
+  mongoose.connect(uri)
+  const db = mongoose.connection;
+  
+  db.once('open', async function() {
+      const usersCollection = db.collection('users');
+      const user = await usersCollection.findOne({ ID: id });
+
+      if (user == null) {
+        res.send("done");//signup code
+      } else {
+        res.send("id already exist.");
+      }
+      mongoose.connection.close();
+    });
+  
+});
+
+app.post('/login', (req, res) => {
     const password = req.body.pwd;
     const id = req.body.id;
 

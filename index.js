@@ -11,7 +11,7 @@ const port = 80
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 mongoose.connect(uri)
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   ID: {type: String},
   PWD: {type: String},
   age: {type: Number},

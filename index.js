@@ -48,10 +48,12 @@ app.use(express.static('src'));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
 });
-
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'signup.html'));
 });
+app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
+  res.sendFile(path.join(__dirname, 'src', 'indexpage.html'));
+})
 
 app.post('/signup', (req, res) => {
   const password = req.body.pwd;
@@ -96,10 +98,6 @@ app.post('/login', (req, res) => {
       }
       mongoose.connection.close();
     });
-})
-
-app.post('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
-  res.sendFile(path.join(__dirname, 'src', 'indexpage.html'));
 })
 
 app.listen(port, () =>{

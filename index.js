@@ -59,7 +59,7 @@ app.post('/submit', (req, res) => {
       const usersCollection = db.collection('users');
       const user = await usersCollection.findOne({ ID: id });
 
-      if (user == null || user == undefined) {
+      if (!user) {
         res.send("sign up");
       } else {
         if (password.toString() == user.PWD) {

@@ -82,11 +82,10 @@ app.post('/login', (req, res) => {
       const user = await usersCollection.findOne({ ID: id });
 
       if (user == null) {
-        res.send("sign up");
+        res.redirect('/signup');
       } else {
         if (password.toString() == user.PWD) {
-          res.send("same");
-          //res.redirect('/indexpage');
+          res.redirect('/indexpage');
         } else {
           res.send('wrong');
         }

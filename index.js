@@ -49,6 +49,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
 });
 
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'signup.html'));
+});
+
 app.post('/signup', (req, res) => {
   const password = req.body.pwd;
   const id = req.body.id;

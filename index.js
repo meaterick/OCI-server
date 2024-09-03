@@ -63,13 +63,13 @@ app.post('/signup', (req, res) => {
       if (user == null) {
         res.send("done");//signup code
       } else {
-        res.send("id already exist.");
+        res.send("id already exist. try again.");
       }
       mongoose.connection.close();
     });
   
 });
-/*
+
 app.post('/login', (req, res) => {
     const password = req.body.pwd;
     const id = req.body.id;
@@ -86,7 +86,7 @@ app.post('/login', (req, res) => {
       } else {
         if (password.toString() == user.PWD) {
           res.send("same");
-          //res.redirect('/index');
+          //res.redirect('/indexpage');
         } else {
           res.send('wrong');
         }
@@ -94,8 +94,8 @@ app.post('/login', (req, res) => {
       mongoose.connection.close();
     });
 })
-*/
-app.post('/index', (req, res) => {
+
+app.post('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   res.sendFile(path.join(__dirname, 'src', 'index.html'));
 })
 

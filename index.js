@@ -9,22 +9,6 @@ const app = express()
 const port = 80
 
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
-mongoose.connect(uri)
-
-const db = mongoose.connection;
-
-db.once('open', async function() {
-  console.log("데이터베이스 연결됨");
-
-  const usersCollection = db.collection('users');
-
-  // 데이터 조회
-  const user = await usersCollection.findOne({ ID: 'meaterick' });
-  console.log('모든 사용자:', user);
-
-  // 연결 종료
-  mongoose.connection.close();
-});
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 
@@ -66,12 +50,25 @@ app.get('/', (req, res) => {
 
 app.post('/submit', (req, res) => {
     const password = req.body.pwd;
+
+    mongoose.connect(uri)
+    const db = mongoose.connection;
     
-    if (password.toString() == "chichiiscute") {
+    db.once('open', async function() {
+      console.log("데이터베이스 연결됨");
+      const usersCollection = db.collection('users');
+    
+      // 데이터 조회
+      const user = await usersCollection.findOne({ ID: 'meaterick' });
+
+      if (password.toString() == user.PWD) {
         res.sendFile(path.join(__dirname, 'src', 'first.html')); 
-    } else {
+      } else {
         res.send('wrong');
-    }
+      }
+      // 연결 종료
+      mongoose.connection.close();
+    });
 })
 
 app.listen(port, () =>{

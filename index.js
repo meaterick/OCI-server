@@ -12,7 +12,7 @@ const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.n
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 
-
+/** this codes are another code to first mongodb setting
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -40,6 +40,7 @@ async function run() {
   }
 }
 run().catch(console.dir);
+*/
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));

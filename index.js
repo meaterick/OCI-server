@@ -50,18 +50,23 @@ app.get('/', (req, res) => {
 
 app.post('/submit', (req, res) => {
     const password = req.body.pwd;
+    const id = req.body.id;
 
     mongoose.connect(uri)
     const db = mongoose.connection;
-    
+  
     db.once('open', async function() {
       const usersCollection = db.collection('users');
-      const user = await usersCollection.findOne({ ID: 'meaterick' });
+      const user = await usersCollection.findOne({ ID: id });
 
-      if (password.toString() == user.PWD) {
-        res.sendFile(path.join(__dirname, 'src', 'first.html')); 
+      if user == null {
+        res.send("sign up");
       } else {
-        res.send('wrong');
+        if (password.toString() == user.PWD) {
+          res.sendFile(path.join(__dirname, 'src', 'first.html')); 
+        } else {
+          res.send('wrong');
+        }
       }
       mongoose.connection.close();
     });

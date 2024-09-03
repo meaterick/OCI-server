@@ -1,14 +1,32 @@
 const express = require('express')
 , http = require('http')
 , path = require('path')
-, static = require('serve-static');
+, static = require('serve-static')
+, mongoose = require('mongoose');
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+//const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express()
 const port = 80
 
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
+mongoose.connect(uri)
 
+const userSchema = new Schema({
+  ID: {type: String},
+  PWD: {type: String},
+  age: {type: Number},
+})
+
+const User = mongoose.model('User', userSchema);
+
+const newUser = new User({
+  ID: 'meaterick',
+  PWD: 'chichiiscute',
+  age: 18,
+})
+
+newUser.save().then((val) => console.log(val));
+/*
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -36,7 +54,7 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
+*/
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));
 

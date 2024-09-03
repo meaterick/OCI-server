@@ -45,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'main.html'));
+    res.sendFile(path.join(__dirname, 'src', 'login.html'));
 })
 
 app.post('/submit', (req, res) => {

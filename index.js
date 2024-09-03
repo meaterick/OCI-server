@@ -69,7 +69,7 @@ app.post('/signup', (req, res) => {
     });
   
 });
-
+/*
 app.post('/login', (req, res) => {
     const password = req.body.pwd;
     const id = req.body.id;
@@ -94,7 +94,7 @@ app.post('/login', (req, res) => {
       mongoose.connection.close();
     });
 })
-
+*/
 app.post('/index', (req, res) => {
   res.sendFile(path.join(__dirname, 'src', 'index.html'));
 })

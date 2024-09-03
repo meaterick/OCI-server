@@ -16,11 +16,10 @@ const db = mongoose.connection;
 db.once('open', async function() {
   console.log("데이터베이스 연결됨");
 
-  // 컬렉션에 직접 접근
-  const usersCollection = db.collection('users');
+  const usersCollection = database.collection('users');
 
   // 데이터 조회
-  const users = await usersCollection.find({ID:'meaterick'}).select('PWD')
+  const users = await usersCollection.find({ID:'meaterick'})
   console.log('모든 사용자:', users);
 
   // 연결 종료

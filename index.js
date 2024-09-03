@@ -95,11 +95,11 @@ app.post('/login', (req, res) => {
       mongoose.connection.close();
     });
 })
-
+/*
 app.post('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   res.sendFile(path.join(__dirname, 'src', 'index.html'));
 })
-
+*/
 app.listen(port, () =>{
     console.log(`TEST ${port}`)
 })

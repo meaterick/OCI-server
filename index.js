@@ -16,7 +16,7 @@ const db = mongoose.connection;
 db.once('open', async function() {
   console.log("데이터베이스 연결됨");
 
-  const usersCollection = database.collection('users');
+  const usersCollection = db.collection('users');
 
   // 데이터 조회
   const users = await usersCollection.find({ID:'meaterick'})

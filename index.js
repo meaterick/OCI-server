@@ -85,7 +85,8 @@ app.post('/login', (req, res) => {
         res.send("sign up");
       } else {
         if (password.toString() == user.PWD) {
-          res.redirect('/index');
+          res.send("same");
+          //res.redirect('/index');
         } else {
           res.send('wrong');
         }

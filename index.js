@@ -85,13 +85,17 @@ app.post('/login', (req, res) => {
         res.send("sign up");
       } else {
         if (password.toString() == user.PWD) {
-          res.sendFile(path.join(__dirname, 'src', 'index.html')); 
+          res.redirect('/index';
         } else {
           res.send('wrong');
         }
       }
       mongoose.connection.close();
     });
+})
+
+app.post('/index', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'index.html'));
 })
 
 app.listen(port, () =>{

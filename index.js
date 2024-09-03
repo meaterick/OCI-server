@@ -10,7 +10,24 @@ const port = 80
 
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 mongoose.connect(uri)
-User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
+
+const db = mongoose.connection;
+
+db.once('open', async function() {
+  console.log("데이터베이스 연결됨");
+
+  // 컬렉션에 직접 접근
+  const usersCollection = db.collection('users');
+
+  // 데이터 조회
+  const users = await usersCollection.find({ID:'meaterick'}).select('PWD')
+  console.log('모든 사용자:', users);
+
+  // 연결 종료
+  mongoose.connection.close();
+});
+
+//User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 
 /*
 const client = new MongoClient(uri, {

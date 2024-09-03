@@ -55,10 +55,7 @@ app.post('/submit', (req, res) => {
     const db = mongoose.connection;
     
     db.once('open', async function() {
-      console.log("데이터베이스 연결됨");
       const usersCollection = db.collection('users');
-    
-      // 데이터 조회
       const user = await usersCollection.findOne({ ID: 'meaterick' });
 
       if (password.toString() == user.PWD) {
@@ -66,7 +63,6 @@ app.post('/submit', (req, res) => {
       } else {
         res.send('wrong');
       }
-      // 연결 종료
       mongoose.connection.close();
     });
 })

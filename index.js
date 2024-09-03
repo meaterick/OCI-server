@@ -63,7 +63,7 @@ app.post('/submit', (req, res) => {
         res.send("sign up");
       } else {
         if (password.toString() == user.PWD) {
-          res.sendFile(path.join(__dirname, 'src', 'first.html')); 
+          res.sendFile(path.join(__dirname, 'src', 'index.html')); 
         } else {
           res.send('wrong');
         }

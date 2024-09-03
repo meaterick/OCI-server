@@ -19,7 +19,7 @@ db.once('open', async function() {
   const usersCollection = db.collection('users');
 
   // 데이터 조회
-  const user = await usersCollection.findOne({ ID: 'meaterick' }).exec();
+  const user = await usersCollection.findOne({ ID: 'meaterick' });
   console.log('모든 사용자:', user);
 
   // 연결 종료

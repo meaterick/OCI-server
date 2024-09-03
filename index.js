@@ -10,8 +10,6 @@ const port = 80
 
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 mongoose.connect(uri)
-
-const User = mongoose.model('User', userSchema);
 User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 
 /*

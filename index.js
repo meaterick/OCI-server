@@ -129,7 +129,7 @@ app.post('/login', (req, res) => {
 
           const token = jwt.sign({ username: '${id}' }, SECRET_KEY, { expiresIn: '1h' });
           res.json({ token });
-          res.redirect('/indexpage');
+          //res.redirect('/indexpage');
         } else {
           res.send('wrong');
         }

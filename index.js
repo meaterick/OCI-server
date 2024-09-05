@@ -5,14 +5,16 @@ const express = require('express')
 , mongoose = require('mongoose')
 //, cookieParser = require('cookie-parser')
 //, bodyParser = require('body-parser')
-, jwt = require('jsonwebtoken')
-, bcrypt = require('bcryptjs');
+, jwt = require('jsonwebtoken');
+//, bcrypt = require('bcryptjs')
 
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express()
 const port = 80
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
+const secretKey = 's93mr8MS8wuey37dhAyw182038emfu6C';
+
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 
@@ -59,6 +61,21 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'signup.html'));
 });
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
+
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+      return res.sendStatus(401);
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+      if (err) {
+          return res.sendStatus(403);
+      }
+
+      res.send(`Hello ${user}, this is a protected route.`)
+  }
   /* cookie based user check code
   const sessionId = req.cookies['id_session'];
   // 인증 로직
@@ -109,6 +126,9 @@ app.post('/login', (req, res) => {
         if (password.toString() == user.PWD) {
           //cookie based user check code
           //res.cookie('id_session', `${id}`, { httpOnly: true, maxAge: 3600000 });
+
+          const token = jwt.sign({ username: ${id} }, SECRET_KEY, { expiresIn: '1h' });
+          res.json({ token });
           res.redirect('/indexpage');
         } else {
           res.send('wrong');

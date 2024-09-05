@@ -127,7 +127,7 @@ app.post('/login', (req, res) => {
           //cookie based user check code
           //res.cookie('id_session', `${id}`, { httpOnly: true, maxAge: 3600000 });
 
-          const token = jwt.sign({ username: '${id}' }, SECRET_KEY, { expiresIn: '1h' });
+          const token = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1h' });
           res.json({ token });
           //res.redirect('/indexpage');
         } else {

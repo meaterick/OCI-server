@@ -1,3 +1,9 @@
+/*
+bcrypt, 
+JWT+쿠키 + session(study),
+string boot,
+google signup+login,
+*/
 const express = require('express')
 , http = require('http')
 , path = require('path')

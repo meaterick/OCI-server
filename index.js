@@ -2,12 +2,14 @@ const express = require('express')
 , http = require('http')
 , path = require('path')
 , static = require('serve-static')
-, mongoose = require('mongoose');
+, mongoose = require('mongoose')
+, cookieParser = require('cookie-parser')
+, bodyParser = require('body-parser');
+
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express()
 const port = 80
-
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
@@ -44,6 +46,8 @@ run().catch(console.dir);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));
+app.use(cookieParser());
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
@@ -52,6 +56,15 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'signup.html'));
 });
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
+  const sessionId = req.cookies['session_id'];
+  // 인증 로직
+  if (sessionId) {
+    // 인증 성공 시 처리
+    res.send('good');
+  } else {
+    // 인증 실패 시
+    res.status(401).send('인증 필요');
+  }
   res.sendFile(path.join(__dirname, 'src', 'indexpage.html'));
 })
 
@@ -91,6 +104,7 @@ app.post('/login', (req, res) => {
         res.redirect('/signup');
       } else {
         if (password.toString() == user.PWD) {
+          res.cookie('session_id', `${user.id}_session`, { httpOnly: true, maxAge: 3600000 });
           res.redirect('/indexpage');
         } else {
           res.send('wrong');
@@ -101,5 +115,5 @@ app.post('/login', (req, res) => {
 })
 
 app.listen(port, () =>{
-    console.log(`TEST ${port}`)
+    console.log(`Server running in ${port} port`)
 })

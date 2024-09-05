@@ -13,7 +13,7 @@ const express = require('express')
 const app = express()
 const port = 80
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
-const secretKey = 's93mr8MS8wuey37dhAyw182038emfu6C';
+const SECRET_KEY = 's93mr8MS8wuey37dhAyw182038emfu6C';
 
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));

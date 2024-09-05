@@ -1,7 +1,7 @@
 /*
 bcrypt, 
 JWT+쿠키 + session(study),
-string boot,
+string boot, //https://www.codestates.com/blog/content/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8
 google signup+login,
 */
 const express = require('express')

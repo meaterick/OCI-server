@@ -66,12 +66,12 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-      return res.sendStatus(401);
+      return res.send("no token");
   }
 
   jwt.verify(token, SECRET_KEY, (err, user) => {
       if (err) {
-          return res.sendStatus(403);
+          return res.send("err");
       }
 
       res.send(`Hello ${user}, this is a protected route.`);

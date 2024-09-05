@@ -4,7 +4,7 @@ const express = require('express')
 , static = require('serve-static')
 , mongoose = require('mongoose')
 //, cookieParser = require('cookie-parser')
-//, bodyParser = require('body-parser')
+, bodyParser = require('body-parser')
 , jwt = require('jsonwebtoken');
 //, bcrypt = require('bcryptjs')
 
@@ -65,6 +65,7 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
+  console.log(authHeader + " //// " + token)
   if (!token) {
       return res.send("no token");
   }

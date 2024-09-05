@@ -7,5 +7,7 @@ form {
   justify-content: center;
 }
 
-form > div { 
+.form_layout {
+  display: flex;
+  flex-direction: row;
 }

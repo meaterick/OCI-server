@@ -3,8 +3,10 @@ const express = require('express')
 , path = require('path')
 , static = require('serve-static')
 , mongoose = require('mongoose')
-, cookieParser = require('cookie-parser')
-, bodyParser = require('body-parser');
+//, cookieParser = require('cookie-parser')
+//, bodyParser = require('body-parser')
+, jwt = require('jsonwebtoken')
+, bcrypt = require('bcryptjs');
 
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -46,8 +48,9 @@ run().catch(console.dir);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));
-app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(express.json());
+//app.use(cookieParser());
+//app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
@@ -56,16 +59,16 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'signup.html'));
 });
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
-  const sessionId = req.cookies['session_id'];
+  /* cookie based user check code
+  const sessionId = req.cookies['id_session'];
   // 인증 로직
   if (sessionId) {
-    // 인증 성공 시 처리
-    res.send('good');
+    res.sendFile(path.join(__dirname, 'src', 'indexpage.html'));
   } else {
     // 인증 실패 시
     res.status(401).send('인증 필요');
   }
-  res.sendFile(path.join(__dirname, 'src', 'indexpage.html'));
+  */
 })
 
 app.post('/signup', (req, res) => {
@@ -104,7 +107,8 @@ app.post('/login', (req, res) => {
         res.redirect('/signup');
       } else {
         if (password.toString() == user.PWD) {
-          res.cookie('session_id', `${user.id}_session`, { httpOnly: true, maxAge: 3600000 });
+          //cookie based user check code
+          //res.cookie('id_session', `${id}`, { httpOnly: true, maxAge: 3600000 });
           res.redirect('/indexpage');
         } else {
           res.send('wrong');

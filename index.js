@@ -74,8 +74,8 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
           return res.sendStatus(403);
       }
 
-      res.send(`Hello ${user}, this is a protected route.`)
-  }
+      res.send(`Hello ${user}, this is a protected route.`);
+  })
   /* cookie based user check code
   const sessionId = req.cookies['id_session'];
   // 인증 로직

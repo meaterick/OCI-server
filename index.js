@@ -109,7 +109,6 @@ app.post('/signup', async (req, res) => {
         const userSchema = new mongoose.Schema({
           ID: String,
           PWD: String,
-          age: Number,
         });
         
         // User 모델 정의
@@ -118,7 +117,6 @@ app.post('/signup', async (req, res) => {
         const newUser = new User({
           ID: id,
           PWD: password,
-          age: 18,
         });
         await newUser.save();
         

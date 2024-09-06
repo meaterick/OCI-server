@@ -67,6 +67,7 @@ app.get('/signup', (req, res) => {
 });
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
 
+  /*
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
@@ -78,7 +79,7 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   jwt.verify(token, SECRET_KEY, (err, user) => {
       if (err) {
           return res.send("err");
-      }
+      }*/
 
       res.send(`Hello ${user.username}, this is a protected route.`);
   })
@@ -97,7 +98,12 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
 app.post('/signup', async (req, res) => {
   const password = req.body.pwd;
   const id = req.body.id;
-
+  try {
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+  } catch (err) {
+      console.error('Error:', err);
+  }
+  
   mongoose.connect(uri)
   const db = mongoose.connection;
 
@@ -116,7 +122,7 @@ app.post('/signup', async (req, res) => {
         
         const newUser = new User({
           ID: id,
-          PWD: password,
+          PWD: hashedPassword,
         });
         await newUser.save();
         
@@ -143,13 +149,13 @@ app.post('/login', (req, res) => {
       if (user == null) {
         res.redirect('/signup');
       } else {
-        if (password.toString() == user.PWD) {
+        if (await checkHash(password, user.PWD)) {
           //cookie based user check code
           //res.cookie('id_session', `${id}`, { httpOnly: true, maxAge: 3600000 });
 
-          const token = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1h' });
-          res.json({ token });
-          //res.redirect('/indexpage');
+          //const token = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1h' });
+          //res.json({ token });
+          res.redirect('/indexpage');
         } else {
           res.send('wrong');
         }
@@ -158,21 +164,6 @@ app.post('/login', (req, res) => {
     });
 })
 
-app.listen(port, async () => {
+app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-    
-    const password = 'password';
-    const saltRounds = 12;
-    
-    try {
-        // 비밀번호를 해시
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-        console.log('Hashed Password:', hashedPassword);
-        
-        // 해시된 비밀번호와 원본 비밀번호를 비교
-        const result = await bcrypt.compare(password, hashedPassword);
-        console.log('Password Match:', result); // true이면 비밀번호가 일치함
-    } catch (err) {
-        console.error('Error:', err);
-    }
 });

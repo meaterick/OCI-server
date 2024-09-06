@@ -20,6 +20,7 @@ const app = express()
 const port = 80
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 const SECRET_KEY = 's93mr8MS8wuu6ageo048C';
+const saltRounds = 10;
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 

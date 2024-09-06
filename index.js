@@ -162,6 +162,7 @@ app.listen(port, async () => {
     console.log(`Server running on port ${port}`);
     
     const password = 'password';
+    const saltRounds = 12;
     
     try {
         // 비밀번호를 해시

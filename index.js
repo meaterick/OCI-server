@@ -144,7 +144,7 @@ app.post('/login', (req, res) => {
       if (user == null) {
         res.redirect('/signup');
       } else {
-        if (await checkHash(password, user.PWD)) {
+        if (await bcrypt.checkHash(password, user.PWD)) {
           //cookie based user check code
           //res.cookie('id_session', `${id}`, { httpOnly: true, maxAge: 3600000 });
 

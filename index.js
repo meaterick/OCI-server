@@ -19,7 +19,7 @@ const express = require('express')
 const app = express()
 const port = 80
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
-const SECRET_KEY = 's93mr8MS8wuey37dhAyw182038emfu6C';
+const SECRET_KEY = 's93mr8MS8wuu6ageo048C';
 
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
@@ -81,7 +81,7 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
           return res.send("err");
       }
 
-      res.send(`Hello ${user}, this is a protected route.`);
+      res.send(`Hello ${user.username}, this is a protected route.`);
   })
   /* cookie based user check code
   const sessionId = req.cookies['id_session'];

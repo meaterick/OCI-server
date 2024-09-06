@@ -105,7 +105,7 @@ app.post('/signup', async (req, res) => {
       const usersCollection = db.collection('users');
       const user = await usersCollection.findOne({ ID: id });
     
-      if (user == null && id.lenght()) {
+      if (user == null) {
         const newUser = new User({
           ID: id,
           PWD: passwaord,

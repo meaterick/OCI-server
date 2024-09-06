@@ -158,13 +158,20 @@ app.post('/login', (req, res) => {
     });
 })
 
-app.listen(port, () =>{
-    console.log(`Server running in ${port} port`)
+app.listen(port, async () => {
+    console.log(`Server running on port ${port}`);
+    
     const password = 'password';
     
-    const hashedPassword = bcrypt.hash(password, saltRounds);
-    console.log('Hashed Password:', hashedPassword);
-      
-    const result = bcrypt.compare(password, hashedPassword);
-    console.log('Password Match:', result); 
-})
+    try {
+        // 비밀번호를 해시
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        console.log('Hashed Password:', hashedPassword);
+        
+        // 해시된 비밀번호와 원본 비밀번호를 비교
+        const result = await bcrypt.compare(password, hashedPassword);
+        console.log('Password Match:', result); // true이면 비밀번호가 일치함
+    } catch (err) {
+        console.error('Error:', err);
+    }
+});

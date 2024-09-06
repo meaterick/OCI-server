@@ -66,7 +66,7 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'signup.html'));
 });
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
-
+  
   /*
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -79,10 +79,9 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   jwt.verify(token, SECRET_KEY, (err, user) => {
       if (err) {
           return res.send("err");
-      }*/
-
-      res.send(`Hello ${user.username}, this is a protected route.`);
-  })
+      }
+  })*/
+  res.send(`Hello ${user.username}, this is a protected route.`);
   /* cookie based user check code
   const sessionId = req.cookies['id_session'];
   // 인증 로직

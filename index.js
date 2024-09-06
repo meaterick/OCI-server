@@ -117,7 +117,7 @@ app.post('/signup', async (req, res) => {
         
         const newUser = new User({
           ID: id,
-          PWD: passwaord,
+          PWD: password,
           age: 18,
         });
         await newUser.save();

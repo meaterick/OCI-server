@@ -9,10 +9,10 @@ const express = require('express')
 , path = require('path')
 , static = require('serve-static')
 , mongoose = require('mongoose')
-//, cookieParser = require('cookie-parser')
+, cookieParser = require('cookie-parser')
 , bodyParser = require('body-parser')
-, jwt = require('jsonwebtoken');
-//, bcrypt = require('bcryptjs')
+, jwt = require('jsonwebtoken')
+, bcrypt = require('bcryptjs');
 
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -21,6 +21,8 @@ const port = 80
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 const SECRET_KEY = 's93mr8MS8wuu6ageo048C';
 
+mongoose.connect(uri)
+const db = mongoose.connection;
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 
@@ -57,8 +59,8 @@ run().catch(console.dir);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));
 app.use(express.json());
-//app.use(cookieParser());
-//app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
@@ -95,23 +97,25 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   */
 })
 
-app.post('/signup', (req, res) => {
+app.post('/signup', async (req, res) => {
   const password = req.body.pwd;
   const id = req.body.id;
-
-  mongoose.connect(uri)
-  const db = mongoose.connection;
   
   db.once('open', async function() {
       const usersCollection = db.collection('users');
       const user = await usersCollection.findOne({ ID: id });
-
-      if (user == null) {
+    
+      if (user == null && id.lenght()) {
+        const newUser = new User({
+          ID: id,
+          password: passwaord,
+        });
+        await newUser.save();
+        
         res.send("done");//signup code
       } else {
         res.send("id already exist. try again.");
       }
-      mongoose.connection.close();
     });
   
 });
@@ -119,9 +123,6 @@ app.post('/signup', (req, res) => {
 app.post('/login', (req, res) => {
     const password = req.body.pwd;
     const id = req.body.id;
-
-    mongoose.connect(uri)
-    const db = mongoose.connection;
   
     db.once('open', async function() {
       const usersCollection = db.collection('users');
@@ -141,7 +142,6 @@ app.post('/login', (req, res) => {
           res.send('wrong');
         }
       }
-      mongoose.connection.close();
     });
 })
 

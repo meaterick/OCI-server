@@ -160,14 +160,11 @@ app.post('/login', (req, res) => {
 
 app.listen(port, () =>{
     console.log(`Server running in ${port} port`)
-    (async () => {
-  
-      const password = 'password';
+    const password = 'password';
     
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-      console.log('Hashed Password:', hashedPassword);
+    const hashedPassword = bcrypt.hash(password, saltRounds);
+    console.log('Hashed Password:', hashedPassword);
       
-      const result = await bcrypt.compare(password, hashedPassword);
-      console.log('Password Match:', result); 
-    })();
+    const result = bcrypt.compare(password, hashedPassword);
+    console.log('Password Match:', result); 
 })

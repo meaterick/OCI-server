@@ -21,9 +21,6 @@ const port = 80
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 const SECRET_KEY = 's93mr8MS8wuu6ageo048C';
 
-mongoose.connect(uri)
-const db = mongoose.connection;
-
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 
 /** this codes are another code to first mongodb setting
@@ -100,7 +97,10 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
 app.post('/signup', async (req, res) => {
   const password = req.body.pwd;
   const id = req.body.id;
-  
+
+  mongoose.connect(uri)
+  const db = mongoose.connection;
+
   db.once('open', async function() {
       const usersCollection = db.collection('users');
       const user = await usersCollection.findOne({ ID: id });
@@ -116,6 +116,7 @@ app.post('/signup', async (req, res) => {
       } else {
         res.send("id already exist. try again.");
       }
+    mongoose.connection.close();
     });
   
 });
@@ -123,7 +124,10 @@ app.post('/signup', async (req, res) => {
 app.post('/login', (req, res) => {
     const password = req.body.pwd;
     const id = req.body.id;
-  
+
+    mongoose.connect(uri)
+    const db = mongoose.connection;
+
     db.once('open', async function() {
       const usersCollection = db.collection('users');
       const user = await usersCollection.findOne({ ID: id });
@@ -142,6 +146,7 @@ app.post('/login', (req, res) => {
           res.send('wrong');
         }
       }
+      mongoose.connection.close();
     });
 })
 

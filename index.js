@@ -106,6 +106,15 @@ app.post('/signup', async (req, res) => {
       const user = await usersCollection.findOne({ ID: id });
     
       if (user == null) {
+        const userSchema = new mongoose.Schema({
+          ID: String,
+          PWD: String,
+          age: Number,
+        });
+        
+        // User 모델 정의
+        const User = mongoose.model('User', userSchema);
+        
         const newUser = new User({
           ID: id,
           PWD: passwaord,

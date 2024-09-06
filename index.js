@@ -12,7 +12,7 @@ const express = require('express')
 , cookieParser = require('cookie-parser')
 , bodyParser = require('body-parser')
 , jwt = require('jsonwebtoken')
-, bcrypt = require('bcryptjs');
+, bcrypt = require('bcrypt');
 
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');

@@ -97,11 +97,6 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
 app.post('/signup', async (req, res) => {
   const password = req.body.pwd;
   const id = req.body.id;
-  try {
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-  } catch (err) {
-      console.error('Error:', err);
-  }
   
   mongoose.connect(uri)
   const db = mongoose.connection;
@@ -116,7 +111,7 @@ app.post('/signup', async (req, res) => {
           PWD: String,
         });
         
-        // User 모델 정의
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
         const User = mongoose.model('User', userSchema);
         
         const newUser = new User({

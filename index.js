@@ -86,8 +86,8 @@ app.get('/signup', (req, res) => {
 
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   const token = req.cookies['login_token'];
-  const rrr = req.body.pwd;
-  console.log(rrr)
+  //header에 acce해서 인증만들기
+  
   if (token) {
       try {
           const decoded = jwt.verify(token, SECRET_KEY);
@@ -151,11 +151,10 @@ app.post('/login', loginLimiter, (req, res) => {
       } else {
         const passwordMatches = await bcrypt.compare(password, user.PWD);
         if (passwordMatches) {
-          
-          const token = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1h' });
-          res.cookie('login_token', token, { httpOnly: true, maxAge: 3600000 });
-          //res.json({ token });
-          req.body.pwd = id;
+          const actoken = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '13m' });
+          const retoken = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1d' });
+          //header data 정말 다른 루트이전이 안됨?
+          res.cookie('login_token', actoken, { httpOnly: true, maxAge: 3600000 });
           res.redirect('/indexpage');
         } else {
           res.send('wrong');

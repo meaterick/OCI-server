@@ -86,7 +86,8 @@ app.get('/signup', (req, res) => {
 
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   const token = req.cookies['login_token'];
-  
+  const rrr = req.body.pwd;
+  console.log(rrr)
   if (token) {
       try {
           const decoded = jwt.verify(token, SECRET_KEY);

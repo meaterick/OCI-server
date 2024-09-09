@@ -155,6 +155,7 @@ app.post('/login', loginLimiter, (req, res) => {
           const token = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1h' });
           res.cookie('login_token', token, { httpOnly: true, maxAge: 3600000 });
           //res.json({ token });
+          req.body.pwd = id;
           res.redirect('/indexpage');
         } else {
           res.send('wrong');

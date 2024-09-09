@@ -70,7 +70,7 @@ app.get('/signup', (req, res) => {
 
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   const token = req.cookies['login_token'];
-
+  
   if (token) {
       try {
           const decoded = jwt.verify(token, SECRET_KEY);
@@ -79,20 +79,8 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
           res.status(401).send('Invalid or expired token.');
       }
   } else {
-      // Token is missing
       res.status(400).send('No token found.');
   }
-  
-  /* cookie based user check code
-  const sessionId = req.cookies['id_session'];
-  // 인증 로직
-  if (sessionId) {
-    res.sendFile(path.join(__dirname, 'src', 'indexpage.html'));
-  } else {
-    // 인증 실패 시
-    res.status(401).send('인증 필요');
-  }
-  */
 })
 
 app.post('/signup', async (req, res) => {
@@ -121,7 +109,7 @@ app.post('/signup', async (req, res) => {
         });
         await newUser.save();
         
-        res.send("done");//signup code
+        res.send("done");//redirect code
       } else {
         res.send("id already exist. try again.");
       }

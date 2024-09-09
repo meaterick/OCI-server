@@ -63,20 +63,19 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
 });
+
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'signup.html'));
 });
+
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
-  const token = req.cookies.login_state;
+  const token = req.cookies['login_token'];
 
   if (token) {
       try {
-          // Verify the token
           const decoded = jwt.verify(token, SECRET_KEY);
-          // Token is valid, respond with a welcome message
           res.send(`Hello ${decoded.username}, welcome to the index page!`);
       } catch (err) {
-          // Token is invalid or expired
           res.status(401).send('Invalid or expired token.');
       }
   } else {

@@ -12,6 +12,7 @@ security
 5. nosql attack
 */
 const express = require('express')
+, rateLimit = require('express-rate-limit')
 , http = require('http')
 , path = require('path')
 , static = require('serve-static')
@@ -60,6 +61,14 @@ async function run() {
 }
 run().catch(console.dir);
 */
+
+const loginLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 15 minutes
+    max: 5, // Limit each IP to 5 login requests per 15 minutes
+    message: "Too many login attempts, please try again after 15 minutes.",
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src'));
@@ -125,7 +134,7 @@ app.post('/signup', async (req, res) => {
   
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', loginLimiter, (req, res) => {
     const password = req.body.pwd;
     const id = req.body.id;
 

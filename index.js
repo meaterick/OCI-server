@@ -67,22 +67,23 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'signup.html'));
 });
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
-  
-  /*
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = req.cookies.login_state;
 
-  console.log(authHeader + " //// " + token)
-  if (!token) {
-      return res.send("no token");
-  }
-
-  jwt.verify(token, SECRET_KEY, (err, user) => {
-      if (err) {
-          return res.send("err");
+  if (token) {
+      try {
+          // Verify the token
+          const decoded = jwt.verify(token, SECRET_KEY);
+          // Token is valid, respond with a welcome message
+          res.send(`Hello ${decoded.username}, welcome to the index page!`);
+      } catch (err) {
+          // Token is invalid or expired
+          res.status(401).send('Invalid or expired token.');
       }
-  })*/
-  res.send(`Hello ${user.username}, this is a protected route.`);
+  } else {
+      // Token is missing
+      res.status(400).send('No token found.');
+  }
+  
   /* cookie based user check code
   const sessionId = req.cookies['id_session'];
   // 인증 로직
@@ -146,10 +147,9 @@ app.post('/login', (req, res) => {
       } else {
         const passwordMatches = await bcrypt.compare(password, user.PWD);
         if (passwordMatches) {
-          //cookie based user check code
-          //res.cookie('id_session', `${id}`, { httpOnly: true, maxAge: 3600000 });
-
-          //const token = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1h' });
+          
+          const token = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1h' });
+          res.cookie('login_token', token, { httpOnly: true, maxAge: 3600000 });
           //res.json({ token });
           res.redirect('/indexpage');
         } else {

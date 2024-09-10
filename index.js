@@ -23,11 +23,11 @@ const express = require('express')
 require('dotenv').config();
 const app = express();
 const port = 80;
-const uri = process.env.uri; //"mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
-const SECRET_KEY_AC = 's93mr8MS8wuu6ageo048C';
-const SECRET_KEY_RE = '8yntay7m39Nfn3pcuMfe1';
+const uri = process.env.MONGODB_URI;
+const SECRET_KEY_AC = process.env.LOGIN_SECRET_KEY_AC;
+const SECRET_KEY_RE = process.env.LOGIN_SECRET_KEY_RE;
 const saltRounds = 10;
-
+  
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
 
 /** this codes are another code to first mongodb setting

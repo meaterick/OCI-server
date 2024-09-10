@@ -5,7 +5,6 @@ string boot, //https://www.codestates.com/blog/content/%EC%8A%A4%ED%94%84%EB%A7%
 google signup+login,
 
 security
-1. harded coded link,uri
 2. https
 4. csrf   if + :-> csrf token
 */
@@ -137,7 +136,7 @@ app.post('/signup', async (req, res) => {
         });
         await newUser.save();
         
-        res.send("done");//redirect code
+        res.redirect('/login');
       } else {
         res.send("id already exist. try again.");
       }
@@ -158,7 +157,7 @@ app.post('/login', loginLimiter, (req, res) => {
       const user = await usersCollection.findOne({ ID: id });
 
       if (user == null) {
-        res.redirect('/signup');
+        res.send("id is not exist")
       } else {
         const passwordMatches = await bcrypt.compare(password, user.PWD);
         if (passwordMatches) {

@@ -10,16 +10,18 @@
 <body>
   <h1>Login</h1>
   <form action="/login" method="post" id="form">
-    <div calss="form_layout">
-    	<p>id</p>
+    <label calss="form_layout">
+    	id
     	<input type="text" name="id" required>
-    </div>
-    <div calss="form_layout">
-    	<p>password</p>
+    </label>
+    <label calss="form_layout">
+    	password
     	<input type="password" name="pwd" required>
+    </label>
+    <div>
+      <button type="submit">LOGIN</button>
+      <butto onclick="location.href='/signup' ">SIGN UP</button>
     </div>
-    <button type="submit">LOGIN</button>
-    <butto onclick="location.href='/signup' ">SIGN UP</button>
-  </form>
+    </form>
 </body>
 </html>

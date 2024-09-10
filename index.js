@@ -94,7 +94,7 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
           const decoded = jwt.verify(actoken, SECRET_KEY_AC);
           res.send(`Hello ${decoded.username}, welcome to the index page!`);
       } catch (err) {
-          res.send('Not Today.');
+          return res.send('Not Today.');
       }
   } else {
     if (retoken) {
@@ -104,12 +104,12 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
           const actoken = jwt.sign({ username: id}, SECRET_KEY_AC, { expiresIn: '13m' });
           res.cookie('login_actoken', actoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
           consol.log("sd")
-          res.redirect('/indexpage');
+          return res.redirect('/indexpage');
       } catch (err) {
-          res.send('Not Today./');
+          return res.send('Not Today./');
       }
     }
-      res.send('Not Today.//');
+      return res.send('Not Today.//');
   }
 })
 

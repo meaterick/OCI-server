@@ -1,6 +1,4 @@
 /*
-bcrypt, 
-JWT+쿠키 + session(study),
 string boot, //https://www.codestates.com/blog/content/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8
 google signup+login,
 
@@ -23,7 +21,6 @@ require('dotenv').config();
 const app = express();
 const port = 80;
 const uri = process.env.MONGODB_URI;
-console.log("uri")
 const SECRET_KEY_AC = process.env.LOGIN_SECRET_KEY_AC;
 const SECRET_KEY_RE = process.env.LOGIN_SECRET_KEY_RE;
 const saltRounds = 10;
@@ -136,7 +133,7 @@ app.post('/signup', async (req, res) => {
         });
         await newUser.save();
         
-        res.redirect('/login');
+        res.redirect('/');
       } else {
         res.send("id already exist. try again.");
       }

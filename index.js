@@ -18,13 +18,13 @@ const express = require('express')
 , cookieParser = require('cookie-parser')
 , bodyParser = require('body-parser')
 , jwt = require('jsonwebtoken')
-, bcrypt = require('bcrypt');
-
+, bcrypt = require('bcrypt')
+, require('dotenv').config();
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');
-const app = express()
-const port = 80
-const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
+const app = express();
+const port = 80;
+const uri = process.env.uri; //"mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
 const SECRET_KEY_AC = 's93mr8MS8wuu6ageo048C';
 const SECRET_KEY_RE = '8yntay7m39Nfn3pcuMfe1';
 const saltRounds = 10;

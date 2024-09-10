@@ -27,6 +27,9 @@ form button {
 }
 
 form > div {
+  height:15%;
+  width:70%;
   display: flex;
   flex-direction: row;
+  justify-content:space-evenly;
 }

@@ -18,10 +18,9 @@ const express = require('express')
 , cookieParser = require('cookie-parser')
 , bodyParser = require('body-parser')
 , jwt = require('jsonwebtoken')
-, bcrypt = require('bcrypt')
-, require('dotenv').config();
+, bcrypt = require('bcrypt');
 
-//const { MongoClient, ServerApiVersion } = require('mongodb');
+require('dotenv').config();
 const app = express();
 const port = 80;
 const uri = process.env.uri; //"mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";

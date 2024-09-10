@@ -7,9 +7,7 @@ google signup+login,
 security
 1. harded coded link,uri
 2. https
-3. refresh token
 4. csrf   if + :-> csrf token
-5. nosql attack
 */
 const express = require('express')
 , rateLimit = require('express-rate-limit')

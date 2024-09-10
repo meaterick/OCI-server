@@ -8,7 +8,7 @@ security
 1. harded coded link,uri
 2. https
 3. refresh token
-4. csrf
+4. csrf   if + :-> csrf token
 5. nosql attack
 */
 const express = require('express')
@@ -27,7 +27,8 @@ const express = require('express')
 const app = express()
 const port = 80
 const uri = "mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB";
-const SECRET_KEY = 's93mr8MS8wuu6ageo048C';
+const SECRET_KEY_AC = 's93mr8MS8wuu6ageo048C';
+const SECRET_KEY_RE = '8yntay7m39Nfn3pcuMfe1';
 const saltRounds = 10;
 
 //User.find({ID:'meaterick'}).select('PWD').then((val) => console.log(val));
@@ -85,18 +86,27 @@ app.get('/signup', (req, res) => {
 });
 
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
-  const token = req.cookies['login_token'];
-  //header에 acce해서 인증만들기
+  const actoken = req.cookies['login_actoken'];
+  const retoken = req.cookies['login_retoken'];
   
-  if (token) {
+  if (actoken) {
       try {
-          const decoded = jwt.verify(token, SECRET_KEY);
+          const decoded = jwt.verify(actoken, SECRET_KEY_AC);
           res.send(`Hello ${decoded.username}, welcome to the index page!`);
       } catch (err) {
-          res.status(401).send('Invalid or expired token.');
+          res.send('Not Today.');
       }
   } else {
-      res.status(400).send('No token found.');
+    if (retoken) {
+      try {
+          const decoded = jwt.verify(retoken, SECRET_KEY_RE);
+          const actoken = jwt.sign({ username: id}, SECRET_KEY_AC, { expiresIn: '13m' });
+          res.cookie('login_actoken', actoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
+      } catch (err) {
+          res.send('Not Today./');
+      }
+    }
+      res.send('Not Today.//');
   }
 })
 
@@ -151,10 +161,11 @@ app.post('/login', loginLimiter, (req, res) => {
       } else {
         const passwordMatches = await bcrypt.compare(password, user.PWD);
         if (passwordMatches) {
-          const actoken = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '13m' });
-          const retoken = jwt.sign({ username: id}, SECRET_KEY, { expiresIn: '1d' });
-          //header data 정말 다른 루트이전이 안됨?
-          res.cookie('login_token', actoken, { httpOnly: true, maxAge: 3600000 });
+          const actoken = jwt.sign({ username: id}, SECRET_KEY_AC, { expiresIn: '13m' });
+          const retoken = jwt.sign({ username: id}, SECRET_KEY_RE, { expiresIn: '1d' });
+          
+          res.cookie('login_actoken', actoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
+          res.cookie('login_retoken', retoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
           res.redirect('/indexpage');
         } else {
           res.send('wrong');

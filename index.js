@@ -72,11 +72,26 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'login.html'));
+  const actoken = req.cookies['login_actoken'];
+
+  if (actoken) {
+      try {
+          const decoded = jwt.verify(actoken, SECRET_KEY_AC);
+          return res.redirect('/indexpage');
+      } catch (err) {
+          return res.send('Not Today.');
+      }
+  } else {
+      return res.redirect('/login');
+  }
 });
 
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'signup.html'));
+});
+
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'login.html'));
 });
 
 app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요

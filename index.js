@@ -73,7 +73,8 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   const actoken = req.cookies['login_actoken'];
-
+  const retoken = req.cookies['login_retoken'];
+  
   if (actoken) {
       try {
           const decoded = jwt.verify(actoken, SECRET_KEY_AC);
@@ -82,6 +83,17 @@ app.get('/', (req, res) => {
           return res.send('Not Today.');
       }
   } else {
+    if (retoken) {
+      try {
+          const decoded = jwt.verify(retoken, SECRET_KEY_RE);
+          id = decoded.username;
+          const actoken = jwt.sign({ username: id}, SECRET_KEY_AC, { expiresIn: '13m' });
+          res.cookie('login_actoken', actoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
+          return res.redirect('/indexpage');
+      } catch (err) {
+          return res.send('Not Today./');
+      }
+    }
       return res.redirect('/login');
   }
 });

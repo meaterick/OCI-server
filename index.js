@@ -108,11 +108,10 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
   } else {
     if (retoken) {
       try {
-          console.log(SECRET_KEY_RE)
           const decoded = jwt.verify(retoken, SECRET_KEY_RE);
+          id = decoded.username;
           const actoken = jwt.sign({ username: id}, SECRET_KEY_AC, { expiresIn: '13m' });
           res.cookie('login_actoken', actoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
-          consol.log("sd")
           return res.redirect('/indexpage');
       } catch (err) {
           return res.send('Not Today./');

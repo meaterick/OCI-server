@@ -4,24 +4,30 @@
 <head>
   <meta charset=UTF-8>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--<link href="login.css" rel="stylesheet">-->
+  <link href="login.css" rel="stylesheet">
   <title>Main Page</title>
 </head>
 <body>
+  <div id="v_line"></div>
   <form action="/login" method="post" id="form">
+
     <h1>Login</h1>
+
     <div class="form_layout">
-    	<a>id</a>
+    	<p>id</p>
     	<input type="text" name="id" required>
     </div>
+
     <div class="form_layout">
-    	<a>password</a>
+    	<p>password</p>
     	<input type="password" name="pwd" required>
     </div>
-    <div>
+
+    <div class="form_layout">
       <button type="submit">LOGIN</button>
       <button onclick="location.href='/signup' ">SIGN UP</button>
     </div>
-    </form>
+
+  </form>
 </body>
 </html>

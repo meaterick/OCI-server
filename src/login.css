@@ -1,63 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap');
+
 body {
-  margin: 0vw;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  overflow: hidden;
+  font-family: 'Cormorant SC', serif;
+}
+
+#bgimg {
+  width: 100%;
+  height: 100%;
+  filter: blur(4px);
+  z-index: -1;
+}
+
+#form > h1 {
+  font-size: clamp(2rem, 5vw, 5rem);
+  margin-top: 0;
+}
+
+#form {
+  width: 90vw;
+  height: 50vw;
+  background-color: rgba(255, 255, 255, 0.527);
+  top: 13vh;
+  left: 50%;
+  transform: translateX(-50%);
+  backdrop-filter: blur(6px);
+  position: fixed;
+  z-index: 1;
+  border-radius: 20px;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-#form > h1{
-  font-size: 5vmax;
-  margin-top: 0px;
-}
-
-#v_line {
-  border-left : 1.4vw solid #000000;
-  margin: 10vh 5vw 0vw 4vw;
-  height : 46vh;
-}
-
-#form{
-  margin: 10vh 0vw 0vw 0vw;
-}
-
-.form_layout input{
+.form_layout input {
+  background-color: transparent;
   height: 1.7vh;
-  border: 0px;
-  border-bottom: 2px solid rgb(167, 167, 167);
+  border: 0;
+  border-bottom: 2px solid rgb(99, 99, 99);
+  transition: border-bottom 0.3s ease;
 }
 
-.form_layout p{
-  color: rgb(48, 48, 48);
-  font-size: 2vmax;
-}
-
-.form_layout input:focus{
+.form_layout input:focus {
   outline: none;
-  border-bottom: 2px solid rgb(56, 56, 56);
-}
-
-.form_layout > button{
-  font-size: 1.2vmax;
-  width: 15vw;
-  height: 3vh;
-  background-color: #ffffff;
-  border-radius: 0.6vmax;
-  border: 0.1vmax solid rgb(0, 0, 0);
+  border-bottom-color: rgb(56, 56, 56);
 }
 
 .form_layout {
-  width: 30vw;
-  height: 10vh;
+  width: 100%;
+  max-width: 400px;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   margin-bottom: 5vh;
 }
-
 
 .form_layout:nth-child(-n+3) {
   flex-direction: column;
 }
 
-.form_layout:nth-child(4) {
-  width: 30vw;
-  justify-content: space-between;
+.form_layout > button {
+  font-size: 1.2rem;
+  width: 15vw;
+  height: 3vh;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+#login {
+  background: none;
+  border: none;
+  padding: 0;
 }

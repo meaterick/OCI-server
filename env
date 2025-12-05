@@ -1,0 +1,5 @@
+MONGODB_URI='mongodb+srv://meaterick:qwe123VVBPLK09meate@firstdb.nye4r.mongodb.net/?retryWrites=true&w=majority&appName=firstDB'
+LOGIN_SECRET_KEY_RE='s93mr8MS8wuu6ageo048C'
+LOGIN_SECRET_KEY_AC='8yntay7m39Nfn3pcuMfe1'
+
+#git token = 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

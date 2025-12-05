@@ -74,11 +74,10 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   const actoken = req.cookies['login_actoken'];
   const retoken = req.cookies['login_retoken'];
-  
   if (actoken) {
       try {
           const decoded = jwt.verify(actoken, SECRET_KEY_AC);
-          return res.redirect('/indexpage');
+          return res.redirect('/mainpage');
       } catch (err) {
           return res.send('Not Today.');
       }
@@ -89,7 +88,7 @@ app.get('/', (req, res) => {
           id = decoded.username;
           const actoken = jwt.sign({ username: id}, SECRET_KEY_AC, { expiresIn: '13m' });
           res.cookie('login_actoken', actoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
-          return res.redirect('/indexpage');
+          return res.redirect('/mainpage');
       } catch (err) {
           return res.send('Not Today./');
       }
@@ -106,7 +105,7 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'login.html'));
 });
 
-app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
+app.get('/mainpage', (req, res) => {//쿠키,캐쉬 보안필요
   const actoken = req.cookies['login_actoken'];
   const retoken = req.cookies['login_retoken'];
   
@@ -124,7 +123,7 @@ app.get('/indexpage', (req, res) => {//쿠키,캐쉬 보안필요
           id = decoded.username;
           const actoken = jwt.sign({ username: id}, SECRET_KEY_AC, { expiresIn: '13m' });
           res.cookie('login_actoken', actoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
-          return res.redirect('/indexpage');
+          return res.redirect('/mainpage');
       } catch (err) {
           return res.send('Not Today./');
       }
@@ -189,7 +188,7 @@ app.post('/login', loginLimiter, (req, res) => {
           
           res.cookie('login_actoken', actoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
           res.cookie('login_retoken', retoken, { httpOnly: true, maxAge: 3600000, sameSite: 'lax'});
-          res.redirect('/indexpage');
+          res.redirect('/mainpage');
         } else {
           res.send('wrong');
         }
